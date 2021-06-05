@@ -11,6 +11,10 @@ public class SurveyService<I: SurveyItem> {
     
     private var answers: [I:String] = [:]
     
+    public static var shared: SurveyService {
+        SurveyService()
+    }
+    
     public init() {}
     
     public static func createExampleSurvey() -> Survey<SimpleSurveyItem> {
