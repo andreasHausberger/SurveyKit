@@ -9,6 +9,10 @@ import Foundation
 
 public class SurveyService {
     
+    private var answers: [SimpleSurveyItem:String] = [:]
+    
+    public init() {}
+    
     public static func createExampleSurvey() -> Survey<SimpleSurveyItem> {
         let items: [SimpleSurveyItem] = [
             SimpleSurveyItem(text: "What is your first name?", format: .Freeform, value: nil),
@@ -18,4 +22,20 @@ public class SurveyService {
         ]
         return Survey(title: "First Survey", text: "This is a test to check out how this may look when implemented in a view. This text may be long or shot, but should never be boring. ", items: items)
     }
+    
+    public func save(submission: [SimpleSurveyItem:String]) {
+        self.answers = submission
+    }
+    
+    public func getCompactAnswerArray() -> [(index: Int, question: String, answer: String)] {
+        return answers.map { pair in
+            (index: 0, question: pair.key.text, answer: pair.value)
+        }
+    }
+    
+    public func getFullAnswerArray() -> [SimpleSurveyItem:String] {
+        return self.answers
+    }
+    
+    
 }
