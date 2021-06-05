@@ -16,6 +16,10 @@ public struct SurveyView<I: SurveyItem>: View {
         self.answers.values.filter { $0 != "" && $0 != "0" && $0 != "0.0" }.count
     }
     
+    public init(survey: Survey<I>) {
+        self.survey = survey
+    }
+    
     var didSubmitSurvey: (() -> ())? = nil
     public var body: some View {
         List {
