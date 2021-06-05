@@ -8,6 +8,7 @@
 import SwiftUI
 
 public struct SurveyView<I: SurveyItem>: View {
+    let service = SurveyService<I>.shared
     @State var survey: Survey<I>
     @State var answers: Dictionary<I, String> = [:]
     @State var buttonIsDisabled: Bool = true
@@ -61,7 +62,8 @@ public struct SurveyView<I: SurveyItem>: View {
             Section {
                 VStack(alignment: .center) {
                     Button(action: {
-                        print("submit")
+                        self.service.save(submission: self.answers)
+                        self.didSubmitSurvey?()
                     }, label: {
                         Text("Submit")
                             .padding()
