@@ -100,6 +100,6 @@ public struct SurveyView<I: SurveyItem>: View {
 
 struct SurveyView_Previews: PreviewProvider {
     static var previews: some View {
-        SurveyView<SimpleSurveyItem>(survey: SurveyService.createExampleSurvey())
+        SurveyView<SimpleSurveyItem>(survey: SurveyService<SimpleSurveyItem>.createExampleSurvey())
     }
 }

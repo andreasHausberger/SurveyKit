@@ -7,9 +7,9 @@
 
 import Foundation
 
-public class SurveyService {
+public class SurveyService<I: SurveyItem> {
     
-    private var answers: [SimpleSurveyItem:String] = [:]
+    private var answers: [I:String] = [:]
     
     public init() {}
     
@@ -23,7 +23,7 @@ public class SurveyService {
         return Survey(title: "First Survey", text: "This is a test to check out how this may look when implemented in a view. This text may be long or shot, but should never be boring. ", items: items)
     }
     
-    public func save(submission: [SimpleSurveyItem:String]) {
+    public func save(submission: [I:String]) {
         self.answers = submission
     }
     
@@ -33,7 +33,7 @@ public class SurveyService {
         }
     }
     
-    public func getFullAnswerArray() -> [SimpleSurveyItem:String] {
+    public func getFullAnswerArray() -> [I:String] {
         return self.answers
     }
     
