@@ -12,7 +12,7 @@ public protocol SurveyItem: Hashable {
     var format: AnswerFormat { get set }
     var value: String? { get set }
     var isRequired: Bool { get set }
-    var possibleValues: [Int] { get set }
+    var possibleValues: [AnyHashable] { get set }
     var minimum: Double { get set }
     var maximum: Double { get set }
 }

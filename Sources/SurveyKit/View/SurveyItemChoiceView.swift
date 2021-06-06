@@ -12,7 +12,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
     
     let index: Int
     var item: I
-    let possibleValues: [Int]
+    let possibleValues: [AnyHashable]
     var leadingText: String = ""
     var trailingText: String = ""
     var didEnterAnswer: ((String) -> ())?
@@ -25,7 +25,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
                 .lineLimit(3)
             Picker(selection: $selectedValue, label: Text("Picker"), content: {
                 ForEach(possibleValues, id: \.self) { value in
-                    Text("\(value)").tag(value)
+                    Text(String(describing: value)).tag(value)
                 }
             })
             .shadow(radius: 4)

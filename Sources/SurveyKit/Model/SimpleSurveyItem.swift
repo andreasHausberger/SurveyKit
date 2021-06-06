@@ -9,7 +9,7 @@ import Foundation
 
 public struct SimpleSurveyItem: SurveyItem {
     
-    public init(text: String, format: AnswerFormat, value: String? = nil, isRequired: Bool = true, possibleValues: [Int] = [], minimum: Double = 0, maximum: Double = 0, leadingLabel: String = "", trailingLabel: String = "") {
+    public init(text: String, format: AnswerFormat, value: String? = nil, isRequired: Bool = true, possibleValues: [AnyHashable] = [], minimum: Double = 0, maximum: Double = 0, leadingLabel: String = "", trailingLabel: String = "") {
         self.text = text
         self.format = format
         self.value = value
@@ -39,7 +39,7 @@ public struct SimpleSurveyItem: SurveyItem {
     public var format: AnswerFormat
     public var value: String?
     public var isRequired: Bool
-    public var possibleValues: [Int] = []
+    public var possibleValues: [AnyHashable] = []
     public var minimum: Double
     public var maximum: Double
     var leadingLabel: String = ""
