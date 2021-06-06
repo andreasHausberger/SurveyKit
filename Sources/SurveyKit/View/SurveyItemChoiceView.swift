@@ -24,9 +24,11 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
                 .font(.headline)
                 .lineLimit(3)
             Picker(selection: $selectedValue, label: Text("Picker"), content: {
-                ForEach(0..<possibleValues.count) { index in
+                ForEach(1..<possibleValues.count + 1) { index in
                     let label = possibleValues[index]
-                    Text(String(describing: label)).tag(index)
+                    Text(String(describing: label))
+                        .font(.footnote)
+                        .tag(index)
                 }
             })
             .shadow(radius: 4)
