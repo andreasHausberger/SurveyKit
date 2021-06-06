@@ -25,7 +25,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
                 .lineLimit(3)
             Picker(selection: $selectedValue, label: Text("Picker"), content: {
                 ForEach(1..<possibleValues.count + 1) { index in
-                    let label = possibleValues[index]
+                    let label = possibleValues[index - 1]
                     Text(String(describing: label))
                         .font(.footnote)
                         .tag(index)
