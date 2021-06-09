@@ -16,7 +16,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
     var leadingText: String = ""
     var trailingText: String = ""
     var didEnterAnswer: ((String) -> ())?
-    @State var selectedValue: Int = 0
+    @State var selectedValue: Int = -1
     public var body: some View {
         LazyVStack(alignment: .leading){
             Text("\(index). \(item.text)")
