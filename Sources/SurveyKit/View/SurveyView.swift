@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct SurveyView<I: SurveyItem>: View {
-    let service = SurveyService<I>.shared
+    let service: SurveyService<I>?
     @State var survey: Survey<I>
     @State var answers: Dictionary<I, String> = [:]
     @State var buttonIsDisabled: Bool = true
@@ -17,8 +17,9 @@ public struct SurveyView<I: SurveyItem>: View {
         self.answers.values.filter { $0 != "" && $0 != "0" && $0 != "0.0" }.count
     }
     
-    public init(survey: Survey<I>, didSubmitSurvey: (() -> ())? = nil) {
+    public init(survey: Survey<I>, service: SurveyService<I>?, didSubmitSurvey: (() -> ())? = nil) {
         self.survey = survey
+        self.service = service
         self.didSubmitSurvey = didSubmitSurvey
     }
     
@@ -62,7 +63,7 @@ public struct SurveyView<I: SurveyItem>: View {
             Section {
                 VStack(alignment: .center) {
                     Button(action: {
-                        self.service.save(submission: self.answers)
+                        self.service?.save(submission: self.answers)
                         self.didSubmitSurvey?()
                     }, label: {
                         Text("Submit")
@@ -103,6 +104,6 @@ public struct SurveyView<I: SurveyItem>: View {
 
 struct SurveyView_Previews: PreviewProvider {
     static var previews: some View {
-        SurveyView<SimpleSurveyItem>(survey: SurveyService<SimpleSurveyItem>.createExampleSurvey())
+        SurveyView<SimpleSurveyItem>(survey: SurveyService<SimpleSurveyItem>.createExampleSurvey(), service: nil)
     }
 }
