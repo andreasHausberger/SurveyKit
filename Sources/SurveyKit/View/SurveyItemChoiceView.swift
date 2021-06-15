@@ -33,8 +33,9 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
             })
             .shadow(radius: 4)
             .onReceive([self.selectedValue].publisher.first(), perform: { value in
-                if value >= 0 {
-                    self.didEnterAnswer?("\(value)")
+                let adjustedValue = value + 1
+                if adjustedValue >= 0 {
+                    self.didEnterAnswer?("\(adjustedValue)")
                 }
             })
             .pickerStyle(SegmentedPickerStyle())
