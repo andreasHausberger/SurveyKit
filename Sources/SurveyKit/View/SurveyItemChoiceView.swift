@@ -50,11 +50,14 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
         }
     }
     
-    private func getSelectedValue() -> AnyHashable {
+    private func getSelectedValue() -> String {
         if self.selectedValue == -1 {
             return ""
         }
-        return self.possibleValues[self.selectedValue]
+        if let string = self.possibleValues[selectedValue] as? String {
+            return string
+        }
+        return ""
     }
 }
 
