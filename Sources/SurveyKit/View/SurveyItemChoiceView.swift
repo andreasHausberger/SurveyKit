@@ -24,7 +24,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
                 .fontWeight(.bold)
                 .font(.headline)
                 .lineLimit(3)
-            Picker(selection: $selectedValue, label: Text(selectionText + "\(String(describing: self.getSelectedValue))"), content: {
+            Picker(selection: $selectedValue, label: Text(selectionText + "\(String(describing: self.getSelectedValue()))"), content: {
                 ForEach(1..<possibleValues.count + 1) { index in
                     let label = possibleValues[index - 1]
                     Text(String(describing: label))
