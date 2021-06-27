@@ -16,6 +16,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
     var leadingText: String = ""
     var trailingText: String = ""
     var didEnterAnswer: ((String) -> ())?
+    var selectionText: String = "Auswahl: "
     @State var selectedValue: Int = -1
     public var body: some View {
         LazyVStack(alignment: .leading){
@@ -23,7 +24,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
                 .fontWeight(.bold)
                 .font(.headline)
                 .lineLimit(3)
-            Picker(selection: $selectedValue, label: Text("Picker"), content: {
+            Picker(selection: $selectedValue, label: Text(selectionText + "\(String(describing: self.getSelectedValue))"), content: {
                 ForEach(1..<possibleValues.count + 1) { index in
                     let label = possibleValues[index - 1]
                     Text(String(describing: label))
@@ -31,14 +32,14 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
                         .tag(index)
                 }
             })
-            .shadow(radius: 4)
+//            .shadow(radius: 4)
             .onReceive([self.selectedValue].publisher.first(), perform: { value in
                 let adjustedValue = value + 1
                 if adjustedValue > 0 {
                     self.didEnterAnswer?("\(adjustedValue)")
                 }
             })
-            .pickerStyle(SegmentedPickerStyle())
+            .pickerStyle(MenuPickerStyle())
             HStack {
                 Text(leadingText)
                     .multilineTextAlignment(.leading)
@@ -47,6 +48,13 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
                     .multilineTextAlignment(.trailing)
             }
         }
+    }
+    
+    private func getSelectedValue() -> AnyHashable {
+        if self.selectedValue == -1 {
+            return ""
+        }
+        return self.possibleValues[self.selectedValue]
     }
 }
 
