@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol SurveyItem: Hashable {
+    var itemID: AnyHashable { get set }
     var text: String { get set }
     var format: AnswerFormat { get set }
     var value: String? { get set }

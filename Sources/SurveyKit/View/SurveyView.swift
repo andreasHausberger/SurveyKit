@@ -41,19 +41,20 @@ public struct SurveyView<I: SurveyItem>: View {
                 VStack(spacing: 25) {
                     ForEach(0..<survey.items.count) { index in
                         let item: I = survey.items[index]
+                        let indexPlusOne = index + 1
                         switch item.format {
                         case AnswerFormat.Freeform:
-                            SurveyItemFreeFormView(index: index, item: item, didEnterAnswer: { answer in
+                            SurveyItemFreeFormView(index: indexPlusOne, item: item, didEnterAnswer: { answer in
                                 self.acceptAnswerFor(item, answer: answer)
                             })
                             
                         case AnswerFormat.Choice:
-                            SurveyItemChoiceView(index: index, item: item, possibleValues: item.possibleValues, didEnterAnswer: { answer in
+                            SurveyItemChoiceView(index: indexPlusOne, item: item, possibleValues: item.possibleValues, didEnterAnswer: { answer in
                                 self.acceptAnswerFor(item, answer: answer)
                             })
                             
                         case AnswerFormat.Continuous:
-                            SurveyItemContinuousView(index: index, item: item, didEnterAnswer: { answer in
+                            SurveyItemContinuousView(index: indexPlusOne, item: item, didEnterAnswer: { answer in
                                 self.acceptAnswerFor(item, answer: answer)
                             })
                         }
