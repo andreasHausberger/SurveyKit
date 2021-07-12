@@ -9,12 +9,13 @@ import Foundation
 
 public struct SimpleSurveyItem: SurveyItem {
     
-    public init(itemID: Int = 0, text: String, format: AnswerFormat, value: String? = nil, isRequired: Bool = true, possibleValues: [AnyHashable] = [], minimum: Double = 0, maximum: Double = 0, leadingLabel: String = "", trailingLabel: String = "") {
+    public init(itemID: Int = 0, text: String, format: AnswerFormat, value: String? = nil, isRequired: Bool = true, possibleValues: [AnyHashable] = [], hasReverseScale: Bool = false, minimum: Double = 0, maximum: Double = 0, leadingLabel: String = "", trailingLabel: String = "") {
         self.itemID = itemID
         self.text = text
         self.format = format
         self.value = value
         self.possibleValues = possibleValues
+        self.hasReverseScale = hasReverseScale
         self.minimum = minimum
         self.maximum = maximum
         self.isRequired = isRequired
@@ -44,6 +45,7 @@ public struct SimpleSurveyItem: SurveyItem {
     public var possibleValues: [AnyHashable] = []
     public var minimum: Double
     public var maximum: Double
+    public var hasReverseScale: Bool
     var leadingLabel: String = ""
     var trailingLabel: String = ""
     
