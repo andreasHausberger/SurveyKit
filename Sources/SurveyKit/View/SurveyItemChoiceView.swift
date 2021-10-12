@@ -34,7 +34,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
             })
 //            .shadow(radius: 4)
             .onReceive([self.selectedValue].publisher.first(), perform: { value in
-                self.didEnterAnswer("\(value)")
+                self.didEnterAnswer?("\(value)")
             })
             .pickerStyle(MenuPickerStyle())
             HStack {
