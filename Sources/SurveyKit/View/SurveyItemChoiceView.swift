@@ -25,8 +25,8 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
                 .font(.headline)
                 .lineLimit(3)
             Picker(selection: $selectedValue, label: Text(selectionText + "\(String(describing: self.getSelectedValue()))"), content: {
-                ForEach(1..<possibleValues.count + 1) { index in
-                    let label = possibleValues[index - 1]
+                ForEach(0..<possibleValues.count) { index in
+                    let label = possibleValues[index]
                     Text(String(describing: label))
                         .font(.footnote)
                         .tag(index)
@@ -34,10 +34,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
             })
 //            .shadow(radius: 4)
             .onReceive([self.selectedValue].publisher.first(), perform: { value in
-                let adjustedValue = value + 1
-                if adjustedValue > 0 {
-                    self.didEnterAnswer?("\(adjustedValue)")
-                }
+                self.didEnterAnswer("\(value)")
             })
             .pickerStyle(MenuPickerStyle())
             HStack {
@@ -54,7 +51,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
         if self.selectedValue == -1 {
             return ""
         }
-        if let string = self.possibleValues[selectedValue - 1] as? String {
+        if let string = self.possibleValues[selectedValue] as? String {
             return string
         }
         return ""
