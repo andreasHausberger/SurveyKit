@@ -54,7 +54,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
         if self.selectedValue == -1 {
             return ""
         }
-        if let string = self.possibleValues[selectedValue] as? String {
+        if let string = self.possibleValues[selectedValue - 1] as? String {
             return string
         }
         return ""
