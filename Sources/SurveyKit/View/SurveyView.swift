@@ -11,15 +11,17 @@ public struct SurveyView<I: SurveyItem>: View {
     let service: SurveyService<I>?
     @State var survey: Survey<I>
     @State var answers: Dictionary<I, String> = [:]
-    @State var buttonIsDisabled: Bool = true
     @State var numberOfRequiredItems: Int = 0
+    
+    var submitButtonText: String
     var numberOfCompletedItems: Int {
         self.answers.values.filter { $0 != "" && $0 != "0" && $0 != "0.0" }.count
     }
     
-    public init(survey: Survey<I>, service: SurveyService<I>?, didSubmitSurvey: (() -> ())? = nil) {
+    public init(survey: Survey<I>, service: SurveyService<I>?, submitButtonText: String = "Submit", didSubmitSurvey: (() -> ())? = nil) {
         self.survey = survey
         self.service = service
+        self.submitButtonText = submitButtonText
         self.didSubmitSurvey = didSubmitSurvey
     }
     
@@ -67,7 +69,7 @@ public struct SurveyView<I: SurveyItem>: View {
                         self.service?.save(submission: self.answers)
                         self.didSubmitSurvey?()
                     }, label: {
-                        Text("Submit")
+                        Text(submitButtonText)
                             .padding()
                             .background(Color.blue)
                             .foregroundColor(.white)
@@ -75,7 +77,6 @@ public struct SurveyView<I: SurveyItem>: View {
                             .shadow(radius: 10)
                         }
                     )
-                    .disabled(buttonIsDisabled)
                 }
                 .padding(.vertical)
             }
@@ -92,12 +93,6 @@ public struct SurveyView<I: SurveyItem>: View {
     func acceptAnswerFor(_ item: I, answer: String) {
         print("Number of completed Items: \(self.numberOfCompletedItems)")
         self.answers[item] = answer
-        if self.numberOfCompletedItems >= self.numberOfRequiredItems {
-            self.buttonIsDisabled = false
-        }
-        else {
-            self.buttonIsDisabled = true
-        }
     }
 }
 
