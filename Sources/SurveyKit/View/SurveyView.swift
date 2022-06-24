@@ -27,59 +27,21 @@ public struct SurveyView<I: SurveyItem>: View {
     
     public var didSubmitSurvey: (() -> ())?
     public var body: some View {
-        List {
-            Section {
-                Text(survey.title)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-            }
-            Section {
-                Text(survey.text)
-                    .font(.body)
-                    .multilineTextAlignment(.leading)
-                    .onAppear()
-            }
-            Section {
-                VStack(spacing: 25) {
-                    ForEach(0..<survey.items.count) { index in
-                        let item: I = survey.items[index]
-                        let indexPlusOne = index + 1
-                        switch item.format {
-                        case AnswerFormat.Freeform:
-                            SurveyItemFreeFormView(index: indexPlusOne, item: item, didEnterAnswer: { answer in
-                                self.acceptAnswerFor(item, answer: answer)
-                            })
-                            
-                        case AnswerFormat.Choice:
-                            SurveyItemChoiceView(index: indexPlusOne, item: item, possibleValues: item.possibleValues, didEnterAnswer: { answer in
-                                self.acceptAnswerFor(item, answer: answer)
-                            })
-                            
-                        case AnswerFormat.Continuous:
-                            SurveyItemContinuousView(index: indexPlusOne, item: item, didEnterAnswer: { answer in
-                                self.acceptAnswerFor(item, answer: answer)
-                            })
-                        }
+        NavigationView {
+            List {
+                Section {
+                    Text(survey.text)
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                }
+                Section {
+                    VStack(spacing: 25) {
+                        surveyItems
                     }
                 }
+                submitButton
             }
-            Section {
-                VStack(alignment: .center) {
-                    Button(action: {
-                        self.service?.save(submission: self.answers)
-                        self.didSubmitSurvey?()
-                    }, label: {
-                        Text(submitButtonText)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(45)
-                            .shadow(radius: 10)
-                        }
-                    )
-                }
-                .padding(.vertical)
-            }
+            .navigationTitle(survey.title)
         }
         .onAppear {
             let requiredItems = self.survey.items.filter( { $0.isRequired })
@@ -93,6 +55,46 @@ public struct SurveyView<I: SurveyItem>: View {
     func acceptAnswerFor(_ item: I, answer: String) {
         print("Number of completed Items: \(self.numberOfCompletedItems)")
         self.answers[item] = answer
+    }
+    
+    var submitButton: some View {
+        Button {
+            self.service?.save(submission: self.answers)
+            self.didSubmitSurvey?()
+        } label: {
+            Text(submitButtonText)
+                .fontWeight(.bold)
+                .padding()
+                .frame(maxWidth: .infinity)
+        }
+        .background(Color.blue)
+        .foregroundColor(.white)
+        .cornerRadius(45)
+        .shadow(radius: 10)
+        .frame(maxWidth: .infinity)
+    }
+    
+    var surveyItems: some View {
+        ForEach(0..<survey.items.count) { index in
+            let item: I = survey.items[index]
+            let indexPlusOne = index + 1
+            switch item.format {
+            case AnswerFormat.Freeform:
+                SurveyItemFreeFormView(index: indexPlusOne, item: item, didEnterAnswer: { answer in
+                    self.acceptAnswerFor(item, answer: answer)
+                })
+                
+            case AnswerFormat.Choice:
+                SurveyItemChoiceView(index: indexPlusOne, item: item, possibleValues: item.possibleValues, didEnterAnswer: { answer in
+                    self.acceptAnswerFor(item, answer: answer)
+                })
+                
+            case AnswerFormat.Continuous:
+                SurveyItemContinuousView(index: indexPlusOne, item: item, didEnterAnswer: { answer in
+                    self.acceptAnswerFor(item, answer: answer)
+                })
+            }
+        }
     }
 }
 
