@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+
 protocol SurveyItemView: View {
     associatedtype Item: SurveyItem
     var index: Int { get }

@@ -32,7 +32,6 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
                         .tag(index)
                 }
             })
-//            .shadow(radius: 4)
             .onReceive([self.selectedValue].publisher.first(), perform: { value in
                 self.didEnterAnswer?("\(value)")
             })
@@ -51,10 +50,7 @@ public struct SurveyItemChoiceView<I: SurveyItem>: SurveyItemView {
         if self.selectedValue == -1 {
             return ""
         }
-        if let string = self.possibleValues[selectedValue] as? String {
-            return string
-        }
-        return ""
+        return self.possibleValues[selectedValue].toString()
     }
 }
 

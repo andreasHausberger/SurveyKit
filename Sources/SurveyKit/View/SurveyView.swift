@@ -85,7 +85,7 @@ public struct SurveyView<I: SurveyItem>: View {
                 })
                 
             case AnswerFormat.Choice:
-                SurveyItemChoiceView(index: indexPlusOne, item: item, possibleValues: item.possibleValues, didEnterAnswer: { answer in
+                SurveyItemBubbleChoiceView(index: indexPlusOne, item: item, possibleValues: item.possibleValues, didEnterAnswer: { answer in
                     self.acceptAnswerFor(item, answer: answer)
                 })
                 
